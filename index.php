@@ -1,9 +1,7 @@
 <?php
 
-//user an auto loader
-include_once 'libs/Bootstrap.php';
-include_once 'libs/Controller.php';
-include_once 'libs/View.php';
+//using auto loader to load all the classes from libs folder
+include_once 'includes/autoLoader.inc.php';
 
 
 $app = new Bootstrap();

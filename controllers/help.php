@@ -9,6 +9,9 @@ class Help extends Controller{
     public function other($arg = false){
         echo "we are inside other<br>";
         echo "Optional: " . $arg."<br>";
+
+        require_once('models/help_model.php');
+        $model = new Help_Model();
     }
 }
 
