@@ -4,9 +4,10 @@ class Errormsg extends Controller{
 
     function __construct(){
         parent::__construct();
-        echo "File not found.<br>";
+    }
 
-        $this->view->msg='This page does not exist.<br>';
+    function index(){
+        $this->view->msg = "This page doesn't exist.";
         $this->view->render('error/index');
     }
 

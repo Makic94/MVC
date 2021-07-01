@@ -3,12 +3,20 @@
 class View{
 
     function __construct(){
-        echo "This is the view.<br>";
+        //echo "This is the view.<br>";
     }
 
-    public function render($name)
+    public function render($name, $noInclude = false)
     {
-        require_once('views/'.$name.'.php');
+        if ($noInclude == true) {
+            require_once('views/'.$name.'.php');
+        }
+        else {
+            require_once('views/header.php');
+            require_once('views/'.$name.'.php');
+            require_once('views/footer.php');
+        }
+        
     }
 
 }
