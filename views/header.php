@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css">
     <script src="<?php echo URL; ?>public/js/jquery.js"></script>
     <title>header</title>
+    <?php
+    
+    if (isset($this->js))
+        {
+            foreach($this->js as $js)
+                {
+                    echo '<script src="'.URL.'views/'.$js.'"></script>';
+                }
+        }
+
+    ?>
 </head>
 <?php Session::init(); ?>
 <body>
