@@ -4,7 +4,7 @@ body {
 
 #header {
     padding: 20px;
-    background: gold;
+    background: rgb(88, 123, 238);
 }
 
 #content {
@@ -13,6 +13,6 @@ body {
 }
 
 #footer {
-    background: green;
+    background: rgb(88, 123, 238);
     padding: 20px;
 }
