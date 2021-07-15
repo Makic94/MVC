@@ -9,7 +9,7 @@ class User_Model extends Model{
 
     public function userList()
     {
-        $stmt = $this->db->prepare('SELECT id,login,role FROM users WHERE role="default" OR role="admin" ORDER BY role ASC');
+        $stmt = $this->db->prepare('SELECT id,login,role FROM users WHERE role="default" OR role="admin" ORDER BY role DESC');
         $stmt->execute();
         return $stmt->fetchAll();
 
@@ -26,23 +26,22 @@ class User_Model extends Model{
 
     public function create($data)
     {
-        $stmt = $this->db->prepare('INSERT INTO users (login, password, role) VALUES (:login, :password, :role)');
-        $stmt->execute(array(
-            ':login'=>$data['login'],
-            ':password'=>$data['password'],
-            ':role'=>$data['role']
+        $this->insert('users',array(
+            'login'=>$data['login'],
+            'password'=>Hash::create('md5',$data['password'],HASH_PASSWORD_KEY),
+            'role'=>$data['role']
         ));
     }
 
     public function editSave($data)
     {
-        $stmt = $this->db->prepare('UPDATE users SET login=:login, password=:password, role=:role WHERE id=:id');
-        $stmt->execute(array(
-            ':id'=>$data['id'],
-            ':login'=>$data['login'],
-            ':password'=>md5($data['password']),
-            ':role'=>$data['role']
-        ));
+        $postData = array(
+            'login'=>$data['login'],
+            'password'=>Hash::create('md5',$data['password'],HASH_PASSWORD_KEY),
+            'role'=>$data['role']
+        );
+
+        $this->update('users',$postData,'id='.$data['id']);
     }
 
     public function delete($id)

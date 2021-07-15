@@ -6,11 +6,12 @@ class Login_Model extends Model{
         parent::__construct();
     }
 
-    public function run(){
-        $stmt= $this->db->prepare("SELECT id,role FROM users WHERE login = :login AND password = md5(:password)");
+    public function run()
+    {
+        $stmt= $this->db->prepare("SELECT id,role FROM users WHERE login = :login AND password = :password");
         $stmt->execute(array(
             ':login'=> $_POST['login'],
-            ':password'=>$_POST['password']
+            ':password'=>Hash::create('md5',$_POST['password'],HASH_PASSWORD_KEY)
         ));
         $data = $stmt->fetch();
         

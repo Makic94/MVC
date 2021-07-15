@@ -7,8 +7,6 @@ class Login extends Controller{
     }
 
     function index(){
-        require_once('models/login_model.php');
-        $model = new Login_Model();
         $this->view->render('login/index');
     }
 
