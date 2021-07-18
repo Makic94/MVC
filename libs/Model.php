@@ -10,6 +10,24 @@ class Model{
     }
 
     /**
+     * select
+     * @param string $sql an SQL string
+     * @param array $array Parameters to bind
+     * @param constant $fetchMode A PDO Fetch Mode
+     * @return mixed
+     */
+    public function select($sql,$array=array(),$fetchMode=PDO::FETCH_ASSOC)
+    {
+        $stmt = $this->db->prepare($sql);
+        foreach($array as $key=>$value)
+        {
+            $stmt->bindValue("$key",$value);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll($fetchMode);
+    }
+
+    /**
      * insert
      * @param string $table A name of table to insert into
      * @param string $data An associative array
@@ -53,6 +71,18 @@ class Model{
             $stmt->bindValue(":$key",$value);
         }
         $stmt->execute();
+    }
+
+    /**
+     * delete
+     * @param string $table
+     * @param string $where
+     * @param integer $limit
+     * @return integer Afected Rows
+     */
+    public function deleteF($table,$where,$limit=1)
+    {
+        return $this->db->exec("DELETE FROM $table WHERE $where LIMIT $limit");
     }
 }
 

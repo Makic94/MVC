@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/default.css">
-    <script src="<?php echo URL; ?>public/js/jquery.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>header</title>
     <?php
     
@@ -19,9 +21,8 @@
 
     ?>
 </head>
-<?php Session::init(); ?>
 <body>
-    
+    <?php Session::init(); ?>
     <div id='header'>
         <br>
         <?php if(Session::get('loggedIn')!=true) {?>
