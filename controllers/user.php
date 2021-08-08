@@ -4,14 +4,7 @@ class User extends Controller{
 
     public function __construct()  {
         parent::__construct();
-        Session::init();
-        $role = Session::get('role');
-        $logged = Session::get('loggedIn');
-        if($logged != true or $role!='owner'){
-            Session::destroy();
-            header('Location: '.URL.'login');
-            exit;
-        }
+        Auth::handleLogin();
     }
 
     public function index()

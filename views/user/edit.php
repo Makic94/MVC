@@ -3,7 +3,7 @@
 <?php 
 var_dump($this->user);
 ?>
-<form method="post" action="<?php echo URL; ?>user/editSave/<?php echo $this->user[0]['id']; ?>">
+<form method="post" action="<?php echo URL; ?>user/editSave/<?php echo $this->user[0]['userid']; ?>">
 <label>Login</label><input type="text" name="login" id="login" value="<?php echo $this->user[0]['login'];?>"><br>
 <label>Password</label><input type="text" name="password" id="password"><br>
 <label>Role</label>

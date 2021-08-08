@@ -1,25 +1,40 @@
 <?php
 
+require_once('../config.php');
 require_once('../libs/Form.php');
+require_once('../libs/Form/Val.php');
+require_once('../libs/Model.php');
+require_once('../libs/Database.php');
 
 if(isset($_REQUEST['run'])) {
-$form = new Form();
+    try {
+        $form = new Form();
 
 $form   ->post('name')
+        //->val('minlength',5)
+
         ->post('age')
+        //->val('digit')
+
         ->post('gender');
 
-$a = $form->fetch();
-$b = $form->fetch('age');
+        $form->submit();
+        echo "Form has passed!";
 
-print_r($a);
-echo $b;
+        $data=$form->fetch();
+
+        $new = new Model();
+        $new->insert('person',$data);
+
+    } catch(Exception $e) {
+        echo $e->getMessage();
+    }
 }
 ?>
 <form action="?run" method="post">
-    Name<input type="text" name="name"><br>
-    Age<input type="text" name="age"><br>
-        Gender<select name="gender">
+    Name<input type="text" name="name" id="name"><br>
+    Age<input type="text" name="age" id="age"><br>
+        Gender<select name="gender" id="gender">
         <option value="m">Male</option>
         <option value="f">Female</option>
         </select>

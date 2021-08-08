@@ -9,12 +9,12 @@ class User_Model extends Model{
 
     public function userList()
     {
-        return $this->select('SELECT id,login,role FROM users WHERE role="default" OR role="admin" ORDER BY role DESC');
+        return $this->select('SELECT userid,login,role FROM users WHERE role="default" OR role="admin" ORDER BY role DESC');
     }
 
-    public function userSingleList($id)
+    public function userSingleList($userid)
     {
-        return $this->select('SELECT id,login,role FROM users WHERE id=:id',array('id'=>$id));
+        return $this->select('SELECT userid,login,role FROM users WHERE userid=:userid',array('userid'=>$userid));
     }
 
     public function create($data)
@@ -34,12 +34,12 @@ class User_Model extends Model{
             'role'=>$data['role']
         );
 
-        $this->update('users',$postData,'id='.$data['id']);
+        $this->update('users',$postData,'userid='.$data['userid']);
     }
 
-    public function delete($id)
+    public function delete($userid)
     {
-        $this->deleteF('users',"id='$id'");
+        $this->deleteF('users',"userid='$userid'");
     }
 }
 

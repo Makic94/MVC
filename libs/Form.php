@@ -8,20 +8,36 @@
      * - Return Data
      * - Write to database
      */
+require_once('Form/Val.php');
 class Form{
+
+    /** @var array $_currentItem The immediately Posted Item */
+    private $_currentItem = null;
     
+    /** @var array $_postData Stores the Posted Data */
     private $_postData = array();
 
-    public function __construct(){
+    /** @var object $_val The validator object */
+    private $_val = array();
 
+    /** @var array $_error Holds the current forms errors */
+    private $_error = array();
+
+    /**
+     * __construct - Instantiates the validator class
+     */
+    public function __construct()
+    {
+        $this->_val = new Val();
     }
     /**
      * post - This is to run $_POST
+     * @param string $field - The HTML fieldname to post
      */
     public function post($field)
     {
-        $this->$_postData[$field]=$_POST[$field];
-
+        $this->_postData[$field]=$_POST[$field];
+        $this->currentItem = $field;
         return $this;
     }
 
@@ -36,25 +52,46 @@ class Form{
     {
         if($fieldName) 
         {
-            if(isset($this->$_postData[$fieldName]))
-            return $this->$_postData[$fieldName];
+            if(isset($this->_postData[$fieldName]))
+            return $this->_postData[$fieldName];
 
             else
             return false;
         } 
         else 
         {
-            return $this->$_postData;
+            return $this->_postData;
         }
     }
 
     /**
      * val - This is to validate
      */
-    public function val()
+    public function val($typeOfValidator,$arg=null)
     {
+        if($arg===null) $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem]);
+        else $error = $this->_val->{$typeOfValidator}($this->_postData[$this->_currentItem],$arg);
 
+        if ($error) $this->_error[$this->_currentItem]=$error;
+        
         return $this;
+    }
+
+    public function submit()
+    {
+        if(empty($this->_error)) 
+        {
+            return true;
+        } 
+        else 
+        {
+            $str='';
+            foreach($this->_error as $key => $value)
+                {
+                    $str.=$key . '=>' . $value . "\n";
+                }
+            throw new Exception($str);
+        }
     }
 
 }
